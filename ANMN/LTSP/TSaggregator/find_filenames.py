@@ -120,16 +120,14 @@ def find_filenames(var, site, feature, t_start, t_end):
     files = list(web_root + geoserver_files.url[criteria_all])
 
 
-    if len(files)==0:
-        sys.exit('ERROR: NO file found')
+    if len(files)<=1:
+        sys.exit('NONE or only ONE file found')
 
     write_filenames(files, vargs.out_filename)
-
-    print('%s files found,' % len(files))
 
 
 
 if __name__ == "__main__":
     vargs = args()
     find_filenames(vargs.var, vargs.site, vargs.feature, vargs.t_start, vargs.t_end)
-    print('File urls written to %s' % (vargs.out_filename))
+    print('File names addresses written to %s' % (vargs.out_filename))
