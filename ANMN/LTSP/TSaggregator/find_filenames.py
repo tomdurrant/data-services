@@ -24,18 +24,6 @@ var_names_dict = {'TEMP':               'has_water_temperature',
 
 
 
-def filename_find(var, site, t_start, t_end, out_filename):
-
-    """
-    function to find the names of nc files from the WFS service moorings_all_map
-    filtered by variable name, site code, start date and/or end date
-    var:            Variable name as it appears in the file
-    site:           Site code as it appears in the file
-    t_start:        time_coverage_start of the first file
-    t_end:          time_coverage_end of the last file
-    out             name of the file to output the name sof the selected files
-    """
-
 
 def args():
     """
@@ -132,14 +120,16 @@ def find_filenames(var, site, feature, t_start, t_end):
     files = list(web_root + geoserver_files.url[criteria_all])
 
 
-    if len(files)<=1:
-        sys.exit('ERROR: NONE or only ONE file found')
+    if len(files)==0:
+        sys.exit('ERROR: NO file found')
 
     write_filenames(files, vargs.out_filename)
+
+    print('%s files found,' % len(files))
 
 
 
 if __name__ == "__main__":
     vargs = args()
     find_filenames(vargs.var, vargs.site, vargs.feature, vargs.t_start, vargs.t_end)
-    print('File names addresses written to %s' % (vargs.out_filename))
+    print('File urls written to %s' % (vargs.out_filename))
