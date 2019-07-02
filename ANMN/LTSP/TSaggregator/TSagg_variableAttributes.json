@@ -29,7 +29,6 @@
 	{"ancillary_variables": "DEPTH_quality_control",
 	 "comment": "depthPP: Depth inferred from 2 neighbouring pressure sensors WET Labs WQM @21m and WET Labs WQM @45m, using the Gibbs-SeaWater toolbox (TEOS-10) v3.06 from latitude and relative pressure measurements (calibration offset usually performed to balance current atmospheric pressure and acute sensor precision at a deployed depth).",
 	 "coordinates": "TIME LATITUDE LONGITUDE NOMINAL_DEPTH",
-	 "_FillValue": 999999.0, 
 	 "long_name": "actual depth",
 	 "positive": "down",
 	 "reference_datum": "sea surface",
@@ -40,7 +39,6 @@
 	 
 "DEPTH_quality_control": 
 	{"_Unsigned": "false",
-	 "_FillValue": 99,
 	 "flag_meanings": "No_QC_performed Good_data Probably_good_data Bad_data_that_are_potentially_correctable Bad_data Value_changed Not_used Not_used Not_used Missing_value",
 	 "flag_values": "0, 1, 2, 3, 4, 5, 6, 7, 8, 9",
 	 "long_name": "quality flag for depth",

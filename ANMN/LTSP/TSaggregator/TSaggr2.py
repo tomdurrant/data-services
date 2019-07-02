@@ -95,10 +95,6 @@ def main_aggregator(files_to_agg, var_to_agg):
     variableMainDF = create_empty_dataframe(MainDF_types)
     variableAuxDF = create_empty_dataframe(AuxDF_types)
 
-
-    ## create empty global attribute values to harvest from individual files, as they are not always present
-    gattr_local_time_zone = None
-
     ## main loop
     fileIndex = 0
     for file in files_to_agg:
@@ -200,4 +196,14 @@ if __name__ == "__main__":
 
     ncout_filename = generate_netcdf_output_filename(fileURL=files_to_aggregate[0], nc=nc, VoI=varname, file_product_type='Full', file_version=1)
     print(ncout_filename)
-    nc.to_netcdf(ncout_filename)
+
+    ## set encoding for netCDF file
+    encoding = {'TIME':                     {'_FillValue': False},
+                'LATITUDE':                 {'_FillValue': False},
+                'LONGITUDE':                {'_FillValue': False},
+                'DEPTH':                    {'_FillValue': 999999.0},
+                'DEPTH_quality_control':    {'_FillValue': 99},
+                varname:                    {'_FillValue': 999999.0},
+                varname+'_quality_control': {'_FillValue': 99}}
+
+    nc.to_netcdf(ncout_filename, encoding=encoding)

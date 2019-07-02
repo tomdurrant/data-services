@@ -4,7 +4,7 @@
 "featuretype":	"timeseries",
 "fileversion": 	1,
 "realtime":		"no",
-"datacategory": "",
+"datacategory": "Temperature",
 "timestart": 	"2018-01-01", 
 "timeend":		"",
 "filterout": 	"Velocity"
