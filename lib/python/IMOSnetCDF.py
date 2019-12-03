@@ -1,5 +1,3 @@
-#! /usr/bin/env python
-#
 # Python module to manage IMOS-standard netCDF data files.
 
 
@@ -78,21 +76,17 @@ class IMOSnetCDFFile(object):
 
     def __getattr__(self, name):
         "Return the value of a global attribute."
-        try:
-            exec 'attr = self._F.' + name
-        except AttributeError:
-            attr = self.__dict__[name]
-        return attr
+        return getattr(self._F, name, self.__dict__[name])
 
 
     def __setattr__(self, name, value):
         "Set a global attribute."
-        exec 'self._F.' + name + ' = value'
+        setattr(self._F, name, value)
 
 
     def __delattr__(self, name):
         "Delete a global attribute"
-        exec 'del self._F.' + name
+        delattr(self._F, name)
 
 
     def close(self):
@@ -107,7 +101,7 @@ class IMOSnetCDFFile(object):
         if self.__dict__.has_key('tmpFile'):
             # rename to desired filename and set permissions
             move(self.tmpFile, self.filename)
-            os.chmod(self.filename, 0644)
+            os.chmod(self.filename, 0o644)
         if DEBUG:
             print >>sys.stderr, 'IMOSnetCDF: wrote ' + self.filename
 
@@ -324,8 +318,7 @@ class IMOSnetCDFVariable(object):
 
     def __getattr__(self, name):
         "Return the value of a variable attribute."
-        exec 'attr = self._V.' + name
-        return attr
+        return getattr(self._V, name)
 
 
     def __setattr__(self, name, value):
@@ -334,15 +327,15 @@ class IMOSnetCDFVariable(object):
         Values of _FillValue, valid_min, and valid_max are automatically
         cast to the type of the variable.
         """
-        if name in ('_FillValue', 'valid_min', 'valid_max') and value <> "":
-            exec 'self._V.' + name + ' = np.array([value], dtype=self.dtype)'
+        if name in ('_FillValue', 'valid_min', 'valid_max') and value != "":
+            setattr(self._V, name, np.array([value], dtype=self.dtype))
         else:
-            exec 'self._V.' + name + ' = value'
+            setattr(self._V, name, value)
 
 
     def __delattr__(self, name):
         "Delete a variable attribute"
-        exec 'del self._V.'+name
+        delattr(self._V, name)
 
 
     def __getitem__(self, key):
@@ -371,10 +364,10 @@ class IMOSnetCDFVariable(object):
         # special type-setting functionality we added in
         # self.__setattr__
         if aDict:
-            for name, value in aDict.iteritems():
+            for name, value in aDict.items():
                 self.__setattr__(name, value)
         if attr:
-            for name, value in attr.iteritems():
+            for name, value in attr.items():
                 self.__setattr__(name, value)
 
 
@@ -431,13 +424,13 @@ def attributesFromFile(filename, inAttr={}):
 
     F = open(filename)
     # parse lines in the form 'VARIABLE:attribute_name = value'
-    lines = re.findall('^\s*(\w*):(\S+)\s*=\s*(.+)', F.read(), re.M)
+    lines = re.findall(r'^\s*(\w*):(\S+)\s*=\s*(.+)', F.read(), re.M)
     F.close()
 
     attr = deepcopy(inAttr)
     for (var, aName, aVal) in lines:
 
-        if not attr.has_key(var):
+        if var not in attr:
             attr[var] = OrderedDict()
 
         attr[var][aName] = attributeValueFromString(aVal.rstrip(';'))
@@ -475,7 +468,7 @@ def attributesFromIMOSparametersFile(inAttr={}):
         if len(line) < nCol or line[0][0] == '%': continue
 
         var = line[0]
-        if not attr.has_key(var):
+        if var not in attr:
             attr[var] = OrderedDict()
 
         if int(line[1]):
