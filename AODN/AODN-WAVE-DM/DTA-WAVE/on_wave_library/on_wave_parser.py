@@ -15,7 +15,7 @@ from generate_netcdf_att import generate_netcdf_att
 logger = logging.getLogger(__name__)
 
 BOM_WAVE_PARAMETER_MAPPING = os.path.join(
-    os.path.dirname(__file__), "bom_wave_dm_parameters_mapping.csv"
+    os.path.dirname(__file__), "on_wave_dm_parameters_mapping.csv"
 )
 NC_ATT_CONFIG = os.path.join(os.path.dirname(__file__), "generate_nc_file_att")
 
