@@ -14,7 +14,7 @@ from generate_netcdf_att import generate_netcdf_att
 
 logger = logging.getLogger(__name__)
 
-BOM_WAVE_PARAMETER_MAPPING = os.path.join(
+ON_WAVE_PARAMETER_MAPPING = os.path.join(
     os.path.dirname(__file__), "on_wave_dm_parameters_mapping.csv"
 )
 NC_ATT_CONFIG = os.path.join(os.path.dirname(__file__), "generate_nc_file_att")
@@ -29,9 +29,9 @@ def metadata_info(station_path):
     df = read_metadata_file()
 
     if "TAS01000" in station_path:
-        site_code = "COUEDIC"
-    elif "CapeSorell" in station_path:
-        site_code = "SORELL"
+        site_code = "CIWRB"
+    elif "TAS01970/" in station_path:
+        site_code = "SOWRB"
 
     timezone = df.loc[site_code]["timezone"]
     timezone = dt_parser.parse(timezone[:]).time()
@@ -54,9 +54,9 @@ def metadata_info(station_path):
     }
 
 
-def parse_csv_bom_wave(filepath):
+def parse_csv_on_wave(filepath):
     """
-    parser for csv bom wave files
+    parser for csv on wave files
     :param filepath:
     :return: dataframe of data
     """
@@ -85,9 +85,9 @@ def parse_csv_bom_wave(filepath):
         return df2
 
 
-def parse_txt_bom_wave(filepath):
+def parse_txt_on_wave(filepath):
     """
-    parser for csv bom wave files
+    parser for csv on wave files
     :param filepath:
     :return: dataframe of data
     """
@@ -129,10 +129,7 @@ def parse_txt_bom_wave(filepath):
 
 
 def dateparse(year, monthday, time):
-    yearstart = datetime.datetime(int(year), 1, 1)
-    day_yearstart = yearstart.toordinal()
-    date = datetime.datetime.fromordinal(day_yearstart + int(monthday))
-    return datetime.datetime(date.year, date.month, date.day, int(time[0:2]))
+    return datetime.datetime(int(year), int(monthday[0:2]), int(monthday[2:4]), int(time[0:2]))
 
 
 def dateparse_loop(years, monthdays, times):
@@ -142,9 +139,9 @@ def dateparse_loop(years, monthdays, times):
     return ret
 
 
-def parse_bom_wave(filepath):
+def parse_on_wave(filepath):
     """
-    parser for csv bom wave files
+    parser for csv on wave files
     :param filepath:
     :return: dataframe of data
     """
@@ -193,7 +190,7 @@ def parse_bom_wave(filepath):
         return df
 
 
-def gen_nc_bom_wave_dm_deployment(filepath, metadata, output_path):
+def gen_nc_on_wave_dm_deployment(filepath, metadata, output_path):
     """
     generate a FV01 NetCDF file of current data.
     :param filepath_path: the path to a wave file to parse
@@ -202,16 +199,16 @@ def gen_nc_bom_wave_dm_deployment(filepath, metadata, output_path):
     :return: output file path
     """
 
-    wave_df = parse_bom_wave(filepath)  # only one file
+    wave_df = parse_on_wave(filepath)  # only one file
 
     # substract timezone to be in UTC
     wave_df["datetime"] = wave_df["datetime"].dt.tz_localize(None).astype(
         "O"
     ).values - datetime.timedelta(hours=metadata["timezone"])
 
-    var_mapping = param_mapping_parser(BOM_WAVE_PARAMETER_MAPPING)
+    var_mapping = param_mapping_parser(ON_WAVE_PARAMETER_MAPPING)
     site_code = metadata["site_code"]
-    nc_file_name = "BOM_W_{date_start}_{site_code}_WAVERIDER_FV01_END-{date_end}.nc".format(
+    nc_file_name = "DTA_{date_start}_{site_code}_WAVERIDER_FV01_END-{date_end}.nc".format(
         date_start=wave_df.datetime.dt.strftime("%Y%m%dT%H%M%SZ").values.min(),
         site_code=site_code,
         date_end=wave_df.datetime.dt.strftime("%Y%m%dT%H%M%SZ").values.max(),
@@ -300,4 +297,4 @@ def gen_nc_bom_wave_dm_deployment(filepath, metadata, output_path):
 
 
 # fname = "/source/so_imos/TAS01000/2018/03/WAVE/20180302.WAVE"
-# data = parse_bom_wave(fname)
+# data = parse_on_wave(fname)

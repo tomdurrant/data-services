@@ -1,3 +1,3 @@
-__all__ = ['bom_wave_parser',
+__all__ = ['on_wave_parser',
            'common'
            ]

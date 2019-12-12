@@ -6,7 +6,7 @@ import sys
 import tempfile
 import traceback
 
-from on_wave_library.bom_wave_parser import gen_nc_bom_wave_dm_deployment, metadata_info
+from on_wave_library.on_wave_parser import gen_nc_on_wave_dm_deployment, metadata_info
 from on_wave_library.common import ls_ext_files
 from imos_logging import IMOSLogging
 
@@ -28,7 +28,7 @@ def process_station(station_path, output_path):
         metadata['original_filename'] = os.path.basename(filepath)
         logger.info('Processing {filepath}'.format(filepath=os.path.basename(filepath)))
         try:
-            output_nc_path = gen_nc_bom_wave_dm_deployment(filepath, metadata, output_path)
+            output_nc_path = gen_nc_on_wave_dm_deployment(filepath, metadata, output_path)
             logger.info('NetCDF created at {output_nc_path}'.format(output_nc_path=output_nc_path))
         except Exception, e:
             logger.error(str(e))
@@ -88,7 +88,7 @@ def args():
 if __name__ == "__main__":
     """
     Processing of the full BOM WAVE DM dataset
-    ./bom_wave_dm_process -i $ARCHIVE_DIR/AODN/BOM_WAVE_DM
+    ./on_wave_dm_process -i $ARCHIVE_DIR/AODN/BOM_WAVE_DM
     """
 
     vargs = args()
