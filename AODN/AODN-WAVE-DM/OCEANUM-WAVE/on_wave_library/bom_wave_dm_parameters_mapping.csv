@@ -1,0 +1,7 @@
+BOM_VARNAME,VARNAME,STANDARD_NAME,LONG_NAME,UNITS,COMMENT,VALID_MIN,VALID_MAX,REFERENCE_DATUM,POSITIVE,ANCILLARY_VARIABLES
+Significant Wave Height (Hsig),WHTH,sea_surface_wave_significant_height,significant height of waves on the water body,m,Analysed by zero crossing method. significant wave height from the time domain,0,100,,,
+Max Wave Height (Hmax),WMXH,sea_surface_wave_maximum_height,maximum height of waves on the water body,m,Analysed by zero crossing method. Maximum wave height in the record,0,100,,,
+Tp5,WPPE,sea_surface_wave_period_at_variance_spectral_density_maximum,,s,Analysed by spectral method. Period at the peak spectral energy,0,50,,,
+Significant Wave Period (Tsig),WPTH,sea_surface_wave_significant_period,,s,Analysed by zero crossing method. Period of the significant wave,0,50,,,
+Mean Spread,EPS_TD,,spectral width from the time domain,1,spectral width from the time domain,,,,,
+Hm0,WSSH,,sea surface wave spectral significant height,m,Analysed by spectral method. Significant wave height from the frequency domain,0,100,,,
