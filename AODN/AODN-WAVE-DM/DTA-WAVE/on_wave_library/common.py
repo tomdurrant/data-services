@@ -53,7 +53,7 @@ def ls_ext_files(path, ext):
 def param_mapping_parser(filepath):
     """
     parser of mapping csv file
-    :param filepath: path to csv file containing mapping information between BOM parameters and IMOS/CF parameters
+    :param filepath: path to csv file containing mapping information between Triaxys parameters and IMOS/CF parameters
     :return: pandas dataframe of filepath
     """
     if not filepath:
@@ -61,7 +61,7 @@ def param_mapping_parser(filepath):
 
     df = pd.read_table(filepath, sep=r",",
                        engine='python')
-    df.set_index('BOM_VARNAME', inplace=True)
+    df.set_index('TRIAXYS_VARNAME', inplace=True)
     return df
 
 
