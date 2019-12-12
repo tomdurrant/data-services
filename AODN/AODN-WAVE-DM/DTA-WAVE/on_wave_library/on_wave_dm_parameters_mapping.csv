@@ -5,6 +5,6 @@ Significant Wave Period (Tsig),WPTH,sea_surface_wave_significant_period,,s,Analy
 Mean Spread,EPS_TD,,spectral width from the time domain,1,spectral width from the time domain,,,,,
 Hm0,WSSH,,sea surface wave spectral significant height,m,Analysed by spectral method. Significant wave height from the frequency domain,0,100,,,
 H 10,WHTE,sea_surface_wave_mean_height_of_highest_tenth,,m,Analysed by zero crossing method,,,,,
-T 10,,WPTE,sea_surface_wave_mean_period_of_highest_tenth,,s,Analysed by wave by wave method,,,,,
+T 10,WPTE,sea_surface_wave_mean_period_of_highest_tenth,,s,Analysed by wave by wave method,,,,,
 Tz,WPMH,sea_surface_wave_mean_period,,s,Analysed by wave by wave method,,0,50,,
 Mean True Direction,WPDTH,,sea surface wave from direction at sea surface wave mean period,degree,WPTH,0,360,true north,clockwise
