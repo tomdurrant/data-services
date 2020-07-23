@@ -7,4 +7,4 @@ Hm0,WSSH,,sea surface wave spectral significant height,m,Analysed by spectral me
 H 10,WHTE,sea_surface_wave_mean_height_of_highest_tenth,,m,Analysed by zero crossing method,,,,,
 T 10,WPTE,sea_surface_wave_mean_period_of_highest_tenth,,s,Analysed by wave by wave method,,,,,
 Tz,WPMH,sea_surface_wave_mean_period,,s,Analysed by wave by wave method,,0,50,,
-Mean True Direction,WPDTH,,sea surface wave from direction at sea surface wave mean period,degree,WPTH,0,360,true north,clockwise
+Mean Magnetic Direction,WPDTH,,sea surface wave from direction at sea surface wave mean period,degree,WPTH,0,360,magnetic north,clockwise

@@ -162,13 +162,13 @@ def parse_on_wave(filepath):
         "H 10",
         "T 10",
         "Mean Period",
+        "Peak Period",
         "Tp5",
         "Hm0",
         "Mean Magnetic Direction",
         "Mean Spread",
         "Mean True Direction",
         "Te",
-        "dummy",
         "Wave Steepness",
     ]
     if filepath.endswith(".WAVE"):
